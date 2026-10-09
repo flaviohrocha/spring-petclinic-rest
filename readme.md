@@ -1,242 +1,283 @@
-# REST version of Spring PetClinic Sample Application (spring-framework-petclinic extension)
+# Versão REST da aplicação de exemplo Spring PetClinic (extensão do spring-framework-petclinic)
 
-[![Java Build Status](https://github.com/spring-petclinic/spring-petclinic-rest/actions/workflows/maven-build-master.yml/badge.svg)](https://github.com/spring-petclinic/spring-petclinic-rest/actions/workflows/maven-build-master.yml)
-[![Docker Build Status](https://github.com/spring-petclinic/spring-petclinic-rest/actions/workflows/docker-build.yml/badge.svg)](https://github.com/spring-petclinic/spring-petclinic-rest/actions/workflows/docker-build.yml)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=spring-petclinic_spring-petclinic-rest&metric=alert_status)](https://sonarcloud.io/dashboard?id=spring-petclinic_spring-petclinic-rest)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=spring-petclinic_spring-petclinic-rest&metric=coverage)](https://sonarcloud.io/dashboard?id=spring-petclinic_spring-petclinic-rest)
+[![Status da compilação Java](https://github.com/spring-petclinic/spring-petclinic-rest/actions/workflows/maven-build-master.yml/badge.svg)](https://github.com/spring-petclinic/spring-petclinic-rest/actions/workflows/maven-build-master.yml)
+[![Status da compilação da imagem Docker](https://github.com/spring-petclinic/spring-petclinic-rest/actions/workflows/docker-build.yml/badge.svg)](https://github.com/spring-petclinic/spring-petclinic-rest/actions/workflows/docker-build.yml)
+[![Status do Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=spring-petclinic_spring-petclinic-rest&metric=alert_status)](https://sonarcloud.io/dashboard?id=spring-petclinic_spring-petclinic-rest)
+[![Cobertura](https://sonarcloud.io/api/project_badges/measure?project=spring-petclinic_spring-petclinic-rest&metric=coverage)](https://sonarcloud.io/dashboard?id=spring-petclinic_spring-petclinic-rest)
 
-This backend version of the Spring Petclinic application only provides a REST API. **There is no UI**.
-The [spring-petclinic-angular project](https://github.com/spring-petclinic/spring-petclinic-angular) is a Angular front-end application which consumes the REST API.
+Esta versão de backend da aplicação Spring Petclinic fornece exclusivamente uma **API REST**. **Não possui interface de usuário (UI)**.
 
-## Understanding the Spring Petclinic application with a few diagrams
+O projeto [spring-petclinic-angular](https://github.com/spring-petclinic/spring-petclinic-angular) é uma aplicação frontend Angular que consome a API REST.
 
-[See the presentation of the Spring Petclinic Framework version](http://fr.slideshare.net/AntoineRey/spring-framework-petclinic-sample-application)
+## Conhecendo a aplicação Spring Petclinic por meio de alguns diagramas
 
-### Petclinic ER Model
+[Consulte a apresentação da versão Spring Framework](http://fr.slideshare.net/AntoineRey/spring-framework-petclinic-sample-application)
+
+### Modelo ER da Petclinic
 
 ![alt petclinic-ermodel](petclinic-ermodel.png)
 
-## Running Petclinic locally
+## Executando a Petclinic localmente
 
-### With Maven command line
+### Com a linha de comando do Maven
+
 ```sh
 git clone https://github.com/spring-petclinic/spring-petclinic-rest.git
 cd spring-petclinic-rest
 ./mvnw spring-boot:run
 ```
 
-### With Docker
+### Com Docker
+
 ```sh
 docker run -p 9966:9966 springcommunity/spring-petclinic-rest
 ```
 
-You can then access petclinic here: [http://localhost:9966/petclinic/](http://localhost:9966/petclinic/)
+Em seguida, você poderá acessar a Petclinic em:
 
-There is an actuator health check route as well:
-* [http://localhost:9966/petclinic/actuator/health](http://localhost:9966/petclinic/actuator/health)
+[http://localhost:9966/petclinic/](http://localhost:9966/petclinic/)
 
-## 📖 OpenAPI REST API Documentation
-This project provides a RESTful API for managing a veterinary clinic's **owners, pets, veterinarians, visits, and specialties**.
+Também existe uma rota de verificação de saúde do Actuator:
 
-### **Access Swagger UI**
-Swagger UI is available at: [http://localhost:9966/petclinic/swagger-ui.html](http://localhost:9966/petclinic/swagger-ui.html).
+- [http://localhost:9966/petclinic/actuator/health](http://localhost:9966/petclinic/actuator/health)
 
-API documentation (OAS 3.1) is accessible at: [http://localhost:9966/petclinic/v3/api-docs](http://localhost:9966/petclinic/v3/api-docs).
+## 📖 Documentação da API REST com OpenAPI
 
+Este projeto fornece uma API RESTful para gerenciamento de **proprietários, animais de estimação, veterinários, visitas e especialidades**.
 
-## 📌 API Endpoints Overview
+### **Acessando a Swagger UI**
 
-| **Method** | **Endpoint** | **Description** |
-|-----------|------------|----------------|
+A Swagger UI está disponível em:
+
+[http://localhost:9966/petclinic/swagger-ui.html](http://localhost:9966/petclinic/swagger-ui.html)
+
+A documentação da API (OAS 3.1) está disponível em:
+
+[http://localhost:9966/petclinic/v3/api-docs](http://localhost:9966/petclinic/v3/api-docs)
+
+### 📌 Visão geral dos endpoints da API
+
+| **Método** | **Endpoint** | **Descrição** |
+| --- | --- | --- |
 | **Owners** |  |  |
-| **GET** | `/api/owners` | Retrieve all pet owners |
-| **GET** | `/api/owners/{ownerId}` | Get a pet owner by ID |
-| **POST** | `/api/owners` | Add a new pet owner |
-| **PUT** | `/api/owners/{ownerId}` | Update an owner’s details |
-| **DELETE** | `/api/owners/{ownerId}` | Delete an owner |
-| **GET** | `/api/owners/{ownerId}/pets/{petId}` | Get a pet by ID (owner’s pet) |
-| **PUT** | `/api/owners/{ownerId}/pets/{petId}` | Update pet details (owner’s pet) |
-| **POST** | `/api/owners/{ownerId}/pets` | Add a new pet to an owner |
-| **POST** | `/api/owners/{ownerId}/pets/{petId}/visits` | Add a vet visit for a pet |
+| **GET** | `/api/owners` | Recupera todos os proprietários de animais |
+| **GET** | `/api/owners/{ownerId}` | Recupera um proprietário de animais pelo ID |
+| **POST** | `/api/owners` | Adiciona um novo proprietário de animais |
+| **PUT** | `/api/owners/{ownerId}` | Atualiza os dados de um proprietário |
+| **DELETE** | `/api/owners/{ownerId}` | Exclui um proprietário |
+| **GET** | `/api/owners/{ownerId}/pets/{petId}` | Recupera um animal pelo ID (animal do proprietário) |
+| **PUT** | `/api/owners/{ownerId}/pets/{petId}` | Atualiza os dados de um animal (animal do proprietário) |
+| **POST** | `/api/owners/{ownerId}/pets` | Adiciona um novo animal a um proprietário |
+| **POST** | `/api/owners/{ownerId}/pets/{petId}/visits` | Adiciona uma visita veterinária para um animal |
 | **Pets** |  |  |
-| **GET** | `/api/pets` | Retrieve all pets |
-| **GET** | `/api/pets/{petId}` | Get a pet by ID |
-| **PUT** | `/api/pets/{petId}` | Update pet details |
-| **DELETE** | `/api/pets/{petId}` | Delete a pet |
+| **GET** | `/api/pets` | Recupera todos os animais |
+| **GET** | `/api/pets/{petId}` | Recupera um animal pelo ID |
+| **PUT** | `/api/pets/{petId}` | Atualiza os dados de um animal |
+| **DELETE** | `/api/pets/{petId}` | Exclui um animal |
 | **Vets** |  |  |
-| **GET** | `/api/vets` | Retrieve all veterinarians |
-| **GET** | `/api/vets/{vetId}` | Get a vet by ID |
-| **POST** | `/api/vets` | Add a new vet |
-| **PUT** | `/api/vets/{vetId}` | Update vet details |
-| **DELETE** | `/api/vets/{vetId}` | Delete a vet |
+| **GET** | `/api/vets` | Recupera todos os veterinários |
+| **GET** | `/api/vets/{vetId}` | Recupera um veterinário pelo ID |
+| **POST** | `/api/vets` | Adiciona um novo veterinário |
+| **PUT** | `/api/vets/{vetId}` | Atualiza os dados de um veterinário |
+| **DELETE** | `/api/vets/{vetId}` | Exclui um veterinário |
 | **Pet Types** |  |  |
-| **GET** | `/api/pettypes` | Retrieve all pet types |
-| **GET** | `/api/pettypes/{petTypeId}` | Get a pet type by ID |
-| **POST** | `/api/pettypes` | Add a new pet type |
-| **PUT** | `/api/pettypes/{petTypeId}` | Update pet type details |
-| **DELETE** | `/api/pettypes/{petTypeId}` | Delete a pet type |
+| **GET** | `/api/pettypes` | Recupera todos os tipos de animais |
+| **GET** | `/api/pettypes/{petTypeId}` | Recupera um tipo de animal pelo ID |
+| **POST** | `/api/pettypes` | Adiciona um novo tipo de animal |
+| **PUT** | `/api/pettypes/{petTypeId}` | Atualiza os dados de um tipo de animal |
+| **DELETE** | `/api/pettypes/{petTypeId}` | Exclui um tipo de animal |
 | **Specialties** |  |  |
-| **GET** | `/api/specialties` | Retrieve all vet specialties |
-| **GET** | `/api/specialties/{specialtyId}` | Get a specialty by ID |
-| **POST** | `/api/specialties` | Add a new specialty |
-| **PUT** | `/api/specialties/{specialtyId}` | Update a specialty |
-| **DELETE** | `/api/specialties/{specialtyId}` | Delete a specialty |
+| **GET** | `/api/specialties` | Recupera todas as especialidades veterinárias |
+| **GET** | `/api/specialties/{specialtyId}` | Recupera uma especialidade pelo ID |
+| **POST** | `/api/specialties` | Adiciona uma nova especialidade |
+| **PUT** | `/api/specialties/{specialtyId}` | Atualiza uma especialidade |
+| **DELETE** | `/api/specialties/{specialtyId}` | Exclui uma especialidade |
 | **Visits** |  |  |
-| **GET** | `/api/visits` | Retrieve all vet visits |
-| **GET** | `/api/visits/{visitId}` | Get a visit by ID |
-| **POST** | `/api/visits` | Add a new visit |
-| **PUT** | `/api/visits/{visitId}` | Update a visit |
-| **DELETE** | `/api/visits/{visitId}` | Delete a visit |
+| **GET** | `/api/visits` | Recupera todas as visitas veterinárias |
+| **GET** | `/api/visits/{visitId}` | Recupera uma visita pelo ID |
+| **POST** | `/api/visits` | Adiciona uma nova visita |
+| **PUT** | `/api/visits/{visitId}` | Atualiza uma visita |
+| **DELETE** | `/api/visits/{visitId}` | Exclui uma visita |
 | **Users** |  |  |
-| **POST** | `/api/users` | Create a new user |
+| **POST** | `/api/users` | Cria um novo usuário |
 
+## Captura de tela do cliente Angular
 
-## Screenshot of the Angular client
+Consulte o repositório em:
 
-See its repository here: https://github.com/spring-petclinic/spring-petclinic-angular
+https://github.com/spring-petclinic/spring-petclinic-angular
 
 <img width="1427" alt="spring-petclinic-angular2" src="https://cloud.githubusercontent.com/assets/838318/23263243/f4509c4a-f9dd-11e6-951b-69d0ef72d8bd.png">
 
-## In case you find a bug/suggested improvement for Spring Petclinic
-Our issue tracker is available here: https://github.com/spring-petclinic/spring-petclinic-rest/issues
+## Caso encontre um bug ou tenha uma sugestão de melhoria para a Spring Petclinic
 
-## Database configuration
+O rastreador de issues está disponível em:
 
-By default, Petclinic uses an **in-memory H2 database**, which is automatically populated with sample data at startup.
+https://github.com/spring-petclinic/spring-petclinic-rest/issues
 
-### **Supported Databases**
+## Configuração do banco de dados
 
-Petclinic supports the following databases:
+Por padrão, a Petclinic utiliza um banco de dados **H2 em memória**, que é preenchido automaticamente com dados de exemplo durante a inicialização.
 
-- **H2 (Default, In-Memory)**
-- **HSQLDB (Alternative In-Memory Option)**
-- **MySQL (Persistent)**
-- **PostgreSQL (Persistent)**
+### **Bancos de dados suportados**
 
-### **Switching Databases**
+A Petclinic oferece suporte aos seguintes bancos de dados:
 
-You can change the database by updating the `spring.profiles.active` property in `application.properties`:
+- **H2 (padrão, em memória)**
+- **HSQLDB (alternativa, em memória)**
+- **MySQL (persistente)**
+- **PostgreSQL (persistente)**
 
-| Database  | Profile Configuration |
-|-----------|----------------------|
-| **H2** (Default)  | `spring.profiles.active=h2,spring-data-jpa` |
-| **HSQLDB** (Alternative In-Memory) | `spring.profiles.active=hsqldb,spring-data-jpa` |
-| **MySQL** (Persistent) | `spring.profiles.active=mysql,spring-data-jpa` |
-| **PostgreSQL** (Persistent) | `spring.profiles.active=postgres,spring-data-jpa` |
+### **Alternando o banco de dados**
 
-For more details, see the [Spring Boot documentation](https://docs.spring.io/spring-boot/how-to/properties-and-configuration.html#howto.properties-and-configuration.set-active-spring-profiles).
+É possível alterar o banco de dados atualizando a propriedade `spring.profiles.active` no arquivo `application.properties`:
 
-### **Using H2 (Default)**
-- No additional setup is required.
-- The database schema and sample data are loaded automatically from `src/main/resources/db/h2/`.
-- You can access the **H2 Console** to inspect the database.
+| Banco de dados | Configuração do profile |
+| --- | --- |
+| **H2** (padrão) | `spring.profiles.active=h2,spring-data-jpa` |
+| **HSQLDB** (alternativa em memória) | `spring.profiles.active=hsqldb,spring-data-jpa` |
+| **MySQL** (persistente) | `spring.profiles.active=mysql,spring-data-jpa` |
+| **PostgreSQL** (persistente) | `spring.profiles.active=postgres,spring-data-jpa` |
 
-### **Accessing the H2 Console**
-1. **Run the application:**
+Para obter mais detalhes, consulte a [documentação do Spring Boot](https://docs.spring.io/spring-boot/how-to/properties-and-configuration.html#howto.properties-and-configuration.set-active-spring-profiles).
+
+### **Utilizando H2 (padrão)**
+
+- Nenhuma configuração adicional é necessária.
+- O esquema do banco de dados e os dados de exemplo são carregados automaticamente a partir de `src/main/resources/db/h2/`.
+- É possível acessar o **H2 Console** para inspecionar o banco de dados.
+
+### **Acessando o H2 Console**
+
+1. **Execute a aplicação:**
+
    ```sh
    mvn spring-boot:run
    ```
-2. **Open H2 Console in your browser:**
+
+2. **Abra o H2 Console no navegador:**
+
    - **URL**: http://localhost:9966/petclinic/h2-console
    - **JDBC URL**: `jdbc:h2:mem:petclinic`
-   - **Username**: `sa`
-   - **Password**: _(leave blank)_
+   - **Usuário**: `sa`
+   - **Senha**: _(deixe em branco)_
 
-### **Using HSQLDB**
-- HSQLDB works similarly to H2 as an **in-memory database**.
-- No additional setup is required—schema and sample data are loaded automatically from `src/main/resources/db/hsqldb/`.
-- Swtich to **HSQLDB** by modifying `application.properties`:
+### **Utilizando HSQLDB**
 
-    ```properties
-    spring.profiles.active=hsqldb,spring-data-jpa
-    ```
+- O HSQLDB funciona de maneira semelhante ao H2 como um **banco de dados em memória**.
+- Nenhuma configuração adicional é necessária — o esquema e os dados de exemplo são carregados automaticamente a partir de `src/main/resources/db/hsqldb/`.
+- Para alternar para **HSQLDB**, modifique o arquivo `application.properties`:
 
-### **Using MySQL**
-Modify `application.properties`:
+```properties
+spring.profiles.active=hsqldb,spring-data-jpa
+```
+
+### **Utilizando MySQL**
+
+Modifique o arquivo `application.properties`:
 
 ```properties
 spring.profiles.active=mysql,spring-data-jpa
 ```
-Start a MySQL database using Docker:
+
+Inicie um banco de dados MySQL utilizando Docker:
+
 ```bash
 docker run -e MYSQL_USER=petclinic -e MYSQL_PASSWORD=petclinic -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=petclinic -p 3306:3306 mysql:8.4
 ```
 
-### **Using PostgreSQL**
-Modify application.properties:
+### **Utilizando PostgreSQL**
+
+Modifique o arquivo `application.properties`:
 
 ```properties
 spring.profiles.active=postgres,spring-data-jpa
 ```
-Start a PostgreSQL database using Docker:
+
+Inicie um banco de dados PostgreSQL utilizando Docker:
+
 ```bash
 docker run -e POSTGRES_USER=petclinic -e POSTGRES_PASSWORD=petclinic -e POSTGRES_DB=petclinic -p 5432:5432 postgres:16.3
 ```
 
-Instead of manually running containers, you can also use `docker-compose.yml`:
+Em vez de executar os contêineres manualmente, também é possível utilizar o `docker-compose.yml`:
 
 ```sh
 docker-compose --profile mysql up
 docker-compose --profile postgres up
 ```
 
-### **Further Documentation**
+### **Documentação adicional**
+
 - [HSQLDB](http://hsqldb.org/doc/2.0/guide/index.html)
 - [MySQL](https://github.com/spring-projects/spring-petclinic/blob/main/src/main/resources/db/mysql/petclinic_db_setup_mysql.txt)
 - [PostgreSQL](https://github.com/spring-projects/spring-petclinic/blob/main/src/main/resources/db/postgres/petclinic_db_setup_postgres.txt)
 
-## API First Approach
+## Abordagem API First
 
-This API is built following some [API First approach principles](https://swagger.io/resources/articles/adopting-an-api-first-approach/).
+Esta API é construída seguindo alguns princípios da [abordagem API First](https://swagger.io/resources/articles/adopting-an-api-first-approach/).
 
-It is specified through the [OpenAPI](https://oai.github.io/Documentation/).
-It is specified in this [file](./src/main/resources/openapi.yml).
+A API é especificada por meio da [OpenAPI](https://oai.github.io/Documentation/).
 
-Some of the required classes are generated during the build time. 
-Here are the generated file types:
-* DTOs
-* API template interfaces specifying methods to override in the controllers
+A especificação está neste [arquivo](./src/main/resources/openapi.yml).
 
-To see how to get them generated you can read the next chapter. 
+Algumas das classes necessárias são geradas durante o processo de build.
 
-## Generated code
+Os tipos de arquivos gerados incluem:
 
-Some of the required classes are generated during the build time using maven or any IDE (e.g., IntelliJ Idea or Eclipse).
+- DTOs
+- Interfaces de template da API que especificam os métodos a serem sobrescritos nos controllers
 
-All of these classes are generated into the ``target/generated-sources`` folder.
+Para saber como gerar essas classes, consulte o próximo capítulo.
 
-Here is a list of the generated packages and the corresponding tooling:
+## Código gerado
 
-| Package name                                   | Tool             |
-|------------------------------------------------|------------------|
-| org.springframework.samples.petclinic.mapper   | [MapStruct](https://mapstruct.org/)        |
-| org.springframework.samples.petclinic.rest.dto | [OpenAPI Generator maven plugin](https://github.com/OpenAPITools/openapi-generator/) |
+Algumas das classes necessárias são geradas durante o processo de build utilizando Maven ou uma IDE, como IntelliJ IDEA ou Eclipse.
 
+Todas essas classes são geradas no diretório:
 
-To get both, you have to run the following command:
+```text
+target/generated-sources
+```
 
-```jshelllanguage
+Veja abaixo uma lista dos pacotes gerados e das respectivas ferramentas:
+
+| Nome do pacote | Ferramenta |
+| --- | --- |
+| `org.springframework.samples.petclinic.mapper` | [MapStruct](https://mapstruct.org/) |
+| `org.springframework.samples.petclinic.rest.dto` | [OpenAPI Generator Maven Plugin](https://github.com/OpenAPITools/openapi-generator/) |
+
+Para obter ambos, execute o seguinte comando:
+
+```bash
 mvn clean install
 ```
 
-## Security configuration
-In its default configuration, Petclinic doesn't have authentication and authorization enabled.
+## Configuração de segurança
 
-### Basic Authentication
-In order to use the basic authentication functionality, turn in on from the `application.properties` file
+Na configuração padrão, a Petclinic não possui autenticação e autorização habilitadas.
+
+### Autenticação básica
+
+Para utilizar a funcionalidade de autenticação básica, habilite-a no arquivo `application.properties`:
+
 ```properties
 petclinic.security.enable=true
 ```
-This will secure all APIs and in order to access them, basic authentication is required.
-Apart from authentication, APIs also require authorization. This is done via roles that a user can have.
-The existing roles are listed below with the corresponding permissions 
 
-* `OWNER_ADMIN` -> `OwnerController`, `PetController`, `PetTypeController` (`getAllPetTypes` and `getPetType`), `VisitController`
-* `VET_ADMIN`   -> `PetTypeController`, `SpecialityController`, `VetController`
-* `ADMIN`       -> `UserController`
+Isso protegerá todas as APIs e, para acessá-las, será necessária autenticação básica.
 
-There is an existing user with the username `admin` and password `admin` that has access to all APIs.
- In order to add a new user, please make `POST /api/users` request with the following payload:
+Além da autenticação, as APIs também exigem autorização. Isso é realizado por meio das roles que um usuário pode possuir.
+
+As roles existentes são apresentadas abaixo, com as respectivas permissões:
+
+- `OWNER_ADMIN` → `OwnerController`, `PetController`, `PetTypeController` (`getAllPetTypes` e `getPetType`), `VisitController`
+- `VET_ADMIN` → `PetTypeController`, `SpecialityController`, `VetController`
+- `ADMIN` → `UserController`
+
+Existe um usuário com o nome de usuário `admin` e a senha `admin` que possui acesso a todas as APIs.
+
+Para adicionar um novo usuário, execute uma requisição `POST /api/users` com o seguinte payload:
 
 ```json
 {
@@ -244,95 +285,129 @@ There is an existing user with the username `admin` and password `admin` that ha
     "password": "password",
     "enabled": true,
     "roles": [
-    	{ "name" : "OWNER_ADMIN" }
+        { "name": "OWNER_ADMIN" }
     ]
 }
 ```
 
-## Working with Petclinic in Eclipse/STS
+## Trabalhando com a Petclinic no Eclipse/STS
 
-### prerequisites
-The following items should be installed in your system:
-* Maven 3 (https://maven.apache.org/install.html)
-* git command line tool (https://help.github.com/articles/set-up-git)
-* Eclipse with the m2e plugin (m2e is installed by default when using the STS (http://www.springsource.org/sts) distribution of Eclipse)
+### Pré-requisitos
 
-Note: when m2e is available, there is an m2 icon in Help -> About dialog.
-If m2e is not there, just follow the install process here: http://eclipse.org/m2e/download/
-* Eclipse with the [mapstruct plugin](https://mapstruct.org/documentation/ide-support/) installed.
+Os seguintes itens devem estar instalados no sistema:
 
-### Steps:
+- Maven 3 (https://maven.apache.org/install.html)
+- Ferramenta de linha de comando `git` (https://help.github.com/articles/set-up-git)
+- Eclipse com o plugin m2e (o m2e é instalado por padrão quando é utilizada a distribuição STS (http://www.springsource.org/sts) do Eclipse)
 
-1) In the command line
-```sh
-git clone https://github.com/spring-petclinic/spring-petclinic-rest.git
-```
-2) Inside Eclipse
-```
-File -> Import -> Maven -> Existing Maven project
-```
+Observação: quando o m2e está disponível, há um ícone `m2` na caixa de diálogo **Help → About**.
 
-## Looking for something in particular?
+Se o m2e não estiver disponível, siga o processo de instalação em:
 
-| Layer | Source |
-|--|--|
-| REST API controllers | [REST folder](src/main/java/org/springframework/samples/petclinic/rest) |
+http://eclipse.org/m2e/download/
+
+- Eclipse com o [plugin MapStruct](https://mapstruct.org/documentation/ide-support/) instalado.
+
+### Etapas
+
+1. Na linha de comando:
+
+   ```sh
+   git clone https://github.com/spring-petclinic/spring-petclinic-rest.git
+   ```
+
+2. No Eclipse:
+
+   ```text
+   File → Import → Maven → Existing Maven project
+   ```
+
+## Procurando algo específico?
+
+| Camada | Origem |
+| --- | --- |
+| Controllers da API REST | [REST folder](src/main/java/org/springframework/samples/petclinic/rest) |
 | Service | [ClinicServiceImpl.java](src/main/java/org/springframework/samples/petclinic/service/ClinicServiceImpl.java) |
 | JDBC | [jdbc folder](src/main/java/org/springframework/samples/petclinic/repository/jdbc) |
 | JPA | [jpa folder](src/main/java/org/springframework/samples/petclinic/repository/jpa) |
 | Spring Data JPA | [springdatajpa folder](src/main/java/org/springframework/samples/petclinic/repository/springdatajpa) |
-| Tests | [AbstractClinicServiceTests.java](src/test/java/org/springframework/samples/petclinic/service/clinicService/AbstractClinicServiceTests.java) |
+| Testes | [AbstractClinicServiceTests.java](src/test/java/org/springframework/samples/petclinic/service/clinicService/AbstractClinicServiceTests.java) |
 
-## Publishing a Docker image
+## Publicando uma imagem Docker
 
-This application uses [Google Jib](https://github.com/GoogleContainerTools/jib) to build an optimized Docker image into the [Docker Hub](https://cloud.docker.com/u/springcommunity/repository/docker/springcommunity/spring-petclinic-rest/) repository.
-The [pom.xml](pom.xml) has been configured to publish the image with name: `springcommunity/spring-petclinic-rest`
+Esta aplicação utiliza o [Google Jib](https://github.com/GoogleContainerTools/jib) para construir uma imagem Docker otimizada no repositório do [Docker Hub](https://cloud.docker.com/u/springcommunity/repository/docker/springcommunity/spring-petclinic-rest/).
 
-Command line to run:
+O arquivo [pom.xml](pom.xml) está configurado para publicar a imagem com o nome:
+
+```text
+springcommunity/spring-petclinic-rest
+```
+
+### Comando para executar
+
 ```sh
 mvn compile jib:build -X -DjibSerialize=true -Djib.to.auth.username=xxx -Djib.to.auth.password=xxxxx
 ```
 
-## Performance Testing
+## Testes de desempenho
 
-To benchmark the scalability of the PetClinic REST API, a JMeter test plan is available.
+Para realizar um benchmark da escalabilidade da API REST da PetClinic, está disponível um plano de testes do JMeter.
 
-- See the [JMeter Performance Test](src/test/jmeter/README.md) for details.
-- Run the test using:
+- Consulte [JMeter Performance Test](src/test/jmeter/README.md) para obter detalhes.
+- Execute o teste utilizando:
+
   ```sh
   jmeter -n -t src/test/jmeter/petclinic-jmeter-crud-benchmark.jmx \
   -Jthreads=100 -Jduration=600 -Jops=2000 -Jramp_time=120 \
   -l results/petclinic-test-results.jtl
+  ```
 
-## API Testing with Postman + Newman
+## Testes da API com Postman + Newman
 
-This project contains **non-regression tests** for the Petclinic API, built with **Postman** and executed via **Newman**, with automated **HTML reports** for easy analysis.
+Este projeto contém **testes de não regressão** para a API Petclinic, desenvolvidos com **Postman** e executados por meio do **Newman**, com **relatórios HTML** automatizados para facilitar a análise.
 
-- See the [Postman + Newman Test](src/test/postman/README.md) for details.
-- You can run the tests with 2 ways:
-  I. Giving Execution Permission to the script file:
-    ```sh
-    chmod +x postman-tests.sh
-    ./postman-tests.sh
-    ```
-  II. Without Permission to the script file:
-    ```sh
-    zsh postman-tests.sh
-    ```
-> Note: You can use your currently bash installed. Like: "bash postman-tests.sh"
+- Consulte [Postman + Newman Test](src/test/postman/README.md) para obter detalhes.
+- Os testes podem ser executados de duas formas:
 
-## Interesting Spring Petclinic forks
+  **I. Concedendo permissão de execução ao arquivo de script:**
 
-The Spring Petclinic master branch in the main [spring-projects](https://github.com/spring-projects/spring-petclinic)
-GitHub org is the "canonical" implementation, currently based on Spring Boot and Thymeleaf.
+  ```sh
+  chmod +x postman-tests.sh
+  ./postman-tests.sh
+  ```
 
-This [spring-petclinic-rest](https://github.com/spring-petclinic/spring-petclinic-rest/) project is one of the [several forks](https://spring-petclinic.github.io/docs/forks.html) 
-hosted in a special GitHub org: [spring-petclinic](https://github.com/spring-petclinic).
-If you have a special interest in a different technology stack
-that could be used to implement the Pet Clinic then please join the community there.
+  **II. Sem conceder permissão de execução ao arquivo de script:**
 
-# Contributing
+  ```sh
+  zsh postman-tests.sh
+  ```
 
-The [issue tracker](https://github.com/spring-petclinic/spring-petclinic-rest/issues) is the preferred channel for bug reports, features requests and submitting pull requests.
+> Observação: você também pode utilizar o `bash` já instalado no sistema:
 
-For pull requests, editor preferences are available in the [editor config](https://github.com/spring-petclinic/spring-petclinic-rest/blob/master/.editorconfig) for easy use in common text editors. Read more and download plugins at <http://editorconfig.org>.
+```sh
+bash postman-tests.sh
+```
+
+## Forks interessantes do Spring Petclinic
+
+A branch `master` do Spring Petclinic no [GitHub da organização spring-projects](https://github.com/spring-projects/spring-petclinic) é a implementação "canônica", atualmente baseada em Spring Boot e Thymeleaf.
+
+Este projeto [spring-petclinic-rest](https://github.com/spring-petclinic/spring-petclinic-rest/) é um dos [vários forks](https://spring-petclinic.github.io/docs/forks.html) hospedados em uma organização específica no GitHub:
+
+[spring-petclinic](https://github.com/spring-petclinic)
+
+Caso você tenha interesse especial em outra stack tecnológica que possa ser utilizada para implementar a Pet Clinic, participe da comunidade.
+
+## Contribuindo
+
+O [issue tracker](https://github.com/spring-petclinic/spring-petclinic-rest/issues) é o canal preferencial para relatar bugs, solicitar funcionalidades e enviar pull requests.
+
+Para pull requests, as preferências do editor estão disponíveis no [editor config](https://github.com/spring-petclinic/spring-petclinic-rest/blob/master/.editorconfig), facilitando o uso em editores de texto comuns.
+
+Saiba mais e baixe plugins em:
+
+<http://editorconfig.org>
+
+
+## README original em inglês
+[README original](readme_original.md)
